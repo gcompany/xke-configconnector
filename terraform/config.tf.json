@@ -1,0 +1,11 @@
+{
+    "locals" : {
+        "billing_account_id" : "01A619-DC79EF-6489D9",
+        "folder_id" : "folders/425096129624",
+        "services" : [
+            "compute.googleapis.com",
+            "container.googleapis.com",
+            "serviceusage.googleapis.com"
+        ]
+    }
+}
