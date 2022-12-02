@@ -13,7 +13,7 @@ title: Config Connector, a new approach to Infrastructure as Code
 subtitle: Do not plan. Reconcile.
 image: images/banner.jpg
 excerpt: >-
-  A plethora of Infrastructure as Code tools help manage such complex environments. Config Connector takes a new approach harnessing the power of Kubernetes to harden the contract between configuration and infrastructure.
+  A plethora of Infrastructure as Code tools help manage such complex environments. Config Connector takes a new approach by harnessing the power of Kubernetes to harden the contract between configuration and infrastructure.
 ---
 Infrastructure as Code (IaC) helps "cloud native" companies manage their infrastructure based on the principles of software engineering. A wide range of IaC tools and frameworks facilitate in updating the cloud infrastructure. Config Connector is the latest member of this family and brings a new approach based on the power of Kubernetes. In this blog post we outline how it works compared to other tools.
 
@@ -131,7 +131,7 @@ Check the events on the `pubsub` object to verify what happened :
 ![Kubernetes CRD reconcile events](./images/reconcile.png)
 
 ## Conclusion
-With Google [Config Connector](https://cloud.google.com/config-connector/docs/overview) we can move to a true declarative approach for infrastructure using Configuration as Data while harnessing the power of Kubernetes.
+With Google [Config Connector](https://cloud.google.com/config-connector/docs/overview) we can move to a truly declarative approach for infrastructure using Configuration as Data by harnessing the power of Kubernetes.
 
 While Config Connector was released by Google for GCP, we see an adoption of the same principles by other Cloud providers. Microsoft Azure released [Azure Service Operator](https://github.com/Azure/azure-service-operator) and AWS is building around [AWS Controllers for Kubernetes (ACK)](https://github.com/aws-controllers-k8s/community). 
 
