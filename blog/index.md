@@ -110,7 +110,7 @@ apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata:
 annotations:
-    cnrm.cloud.google.com/project-id: xke-configconn-demo
+    cnrm.cloud.google.com/project-id: my-project-id
 labels:
     managed: configconnector
 name: cc-managed-topic
