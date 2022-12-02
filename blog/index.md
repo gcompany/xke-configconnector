@@ -124,7 +124,7 @@ Head over to your GCP console and verify that a `pubsub` topic called `cc-manage
 
 But now for the beauty of Kubernetes and continuous reconciliation ...
 
-Delete the `pubsub` topic manually from your project. The Config Connector Operator will detect that the actual state is no longer inline with the desired state and will start taking remediation action. Wait a couple of seconds and ... Kubernetes will recreate the topic you manually deleted ! And there was no procedural/imperative step required.
+Delete the `pubsub` topic manually from your project. The Config Connector `operator` will detect that the actual state is no longer inline with the desired state and will start taking remediation action. Wait a couple of seconds and ... Kubernetes will recreate the topic you manually deleted ! And there was no procedural/imperative step required.
 
 Check the events on the `pubsub` object to verify what happened :
 
