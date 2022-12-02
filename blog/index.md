@@ -43,7 +43,7 @@ Over the years there’s been an explosion in infrastructure platforms and appli
 
 ### Config Connector
 
-Tools like Terraform and Pulumi let admins declare infrastructure in code. But code does not establish a strong contract between desired and current state, and every time code is modified or refactored, a procedural or imperative approach (think: plan/apply) step is required to revalidate the state.
+Tools like Terraform and Pulumi let admins declare infrastructure in code. But code does not establish a strong contract between desired and current state, and every time code is modified or refactored, a procedural or imperative approach (think: plan/apply step) is required to revalidate the state.
 
 Bring in Kubernetes. 
 
