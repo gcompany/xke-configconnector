@@ -9,17 +9,17 @@ og:
   image: images/og-banner.jpg
 slug: try-this-one
 status: publish
-title: Configuraton as Data with Config Connector
+title: Config Connector, a new approach to Infrastructure as Code
 subtitle: Do not plan. Reconcile.
 image: images/banner.jpg
 excerpt: >-
-  A plethora of Infrastructure as Code tools help manage such complex environments. Config Connector takes a new approach called Configuration as Data and uses the intrinsic power of Kubernetes to harden the contract between configuration and infrastructure.
+  A plethora of Infrastructure as Code tools help manage such complex environments. Config Connector takes a new approach harnessing the power of Kubernetes to harden the contract between configuration and infrastructure.
 ---
-
-As companies expand their infrastructure, creating and enforcing consistent configurations and security policies across a growing environment becomes difficult and creates friction. 
-Infrastrucutre as Code (IaC) helps solve this by automating through code the configuration and provisioning of resources, so that human error is eliminated, time is saved, and every step is fully documented.
+Infrastructure as Code (IaC) helps "cloud native" companies manage their infrastructure based on the principles of software engineering. A wide range of IaC tools and frameworks facilitate in updating the cloud infrastructure. Config Connector is the latest member of this family and brings a new approach based on the power of Kubernetes. In this blog post we outline how it works compared to other tools.
 
 <!--more-->
+As companies expand their infrastructure, creating and enforcing consistent configurations and security policies across a growing environment becomes difficult and creates friction. Infrastructure as Code (IaC) helps solve this by automating through code the configuration and provisioning of resources, so that human error is eliminated, time is saved, and every step is fully documented.
+
 IaC applies software engineering practices to infrastructure and brings the same benefits to infrastructure :
 1. Automate: Commit, version, trace, deploy, and collaborate, just like source code.
 2. Declarative: Specify the desired state of infrastructure, not updates
@@ -43,21 +43,45 @@ Over the years there’s been an explosion in infrastructure platforms and appli
 
 ### Config Connector
 
-Tools like Terraform and Pulumi let admins declare infrastructure in code. But code does not esatablish a strong contract between desired and current state, and every time code is modified or refactored, a procedural or imperative approach (think:plan/apply) step is required to revalidate the state.
+Tools like Terraform and Pulumi let admins declare infrastructure in code. But code does not establish a strong contract between desired and current state, and every time code is modified or refactored, a procedural or imperative approach (think: plan/apply) step is required to revalidate the state.
 
 Bring in Kubernetes. 
 
-Controllers are the core of Kubernetes, and of any operator. It’s a controller’s job to ensure that, for any given object, the actual state of the world matches the desired state in the object. 
+Controllers are the core of Kubernetes. It’s a controller’s job to ensure that, for any given object, the actual state of the world matches the desired state in the object. 
 
-Config Connector extends the [Kubernetes Resource Model](https://github.com/kubernetes/design-proposals-archive/blob/main/architecture/resource-management.md) with [Custom Resource Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) for GCP services and resources :
+Config Connector extends the [Kubernetes Resource Model](https://github.com/kubernetes/design-proposals-archive/blob/main/architecture/resource-management.md) with [Custom Resource Definitions (CRD)](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) for GCP services and resources.  
+When you install Config Connector on a Kubernetes cluster, a CRD is defined for every service and resource in GCP :
 
-![configconnector architecture](./images/configconnector-crd.png)
+```
+➜ kubectl get crd --namespace cnrm-system
+NAME                                                                               CREATED AT
+accesscontextmanageraccesslevels.accesscontextmanager.cnrm.cloud.google.com        2022-11-29T07:41:51Z
+accesscontextmanageraccesspolicies.accesscontextmanager.cnrm.cloud.google.com      2022-11-29T07:41:51Z
+accesscontextmanagerserviceperimeters.accesscontextmanager.cnrm.cloud.google.com   2022-11-29T07:41:51Z
+apigeeenvironments.apigee.cnrm.cloud.google.com                                    2022-11-29T07:41:51Z
+apigeeorganizations.apigee.cnrm.cloud.google.com                                   2022-11-29T07:41:51Z
+artifactregistryrepositories.artifactregistry.cnrm.cloud.google.com                2022-11-29T07:41:51Z
+backendconfigs.cloud.google.com                                                    2022-11-25T13:06:26Z
+bigquerydatasets.bigquery.cnrm.cloud.google.com                                    2022-11-29T07:41:51Z
+bigqueryjobs.bigquery.cnrm.cloud.google.com                                        2022-11-29T07:41:52Z
+bigquerytables.bigquery.cnrm.cloud.google.com                                      2022-11-29T07:41:52Z
+bigtableappprofiles.bigtable.cnrm.cloud.google.com                                 2022-11-29T07:41:52Z
+bigtablegcpolicies.bigtable.cnrm.cloud.google.com                                  2022-11-29T07:41:52Z
+bigtableinstances.bigtable.cnrm.cloud.google.com                                   2022-11-29T07:41:52Z
+bigtabletables.bigtable.cnrm.cloud.google.com                                      2022-11-29T07:41:52Z
+billingbudgetsbudgets.billingbudgets.cnrm.cloud.google.com                         2022-11-29T07:41:52Z
+binaryauthorizationattestors.binaryauthorization.cnrm.cloud.google.com             2022-11-29T07:41:52Z
+binaryauthorizationpolicies.binaryauthorization.cnrm.cloud.google.com              2022-11-29T07:41:52Z
+capacityrequests.internal.autoscaling.gke.io                                       2022-11-25T13:05:36Z
+cloudbuildtriggers.cloudbuild.cnrm.cloud.google.com                                2022-11-29T07:41:52Z
+...
+```
 
-Admins can now define the desired state of the infrastructure as data and the Config Connector operator creates and manages Google Cloud resources to reconcile the actual state of the infrastructure with the desired state in the Kubernetes etcd database.
+Admins can now define the desired state of the infrastructure as data in the Kubernetes `etcd` database using the Config Connector CRDs. The Config Connector `operator` is a controller that will reconcile the actual state of the infrastructure with the desired state in the Kubernetes `etcd` database as defined by the admins.
 
-![configconnector crd](./images/configconnector-architecture.png)
+Config Connector `operator` translates desired declarative state to imperative API calls.
 
-Config Connector translates desired declarative state to imperative API calls.
+![Config Connector architecture](./images/configconnector-architecture.png)
 
 ### Example
 
@@ -96,9 +120,9 @@ And apply the file again :
 kubectl apply -f pubsub-topic.yaml
 ```
 
-Head over to your GCP console and verify that a `pubsub` topic called `cc-managed-topic` is actually created. Congratulations, you have declared your configuration as data.
+Head over to your GCP console and verify that a `pubsub` topic called `cc-managed-topic` is actually created. Congratulations, you have declared your configuration as data !
 
-But now for the beauty of Kubernetes and continuous reconcilation :
+But now for the beauty of Kubernetes and continuous reconciliation ...
 
 Delete the `pubsub` topic manually from your project. The Config Connector Operator will detect that the actual state is no longer inline with the desired state and will start taking remediation action. Wait a couple of seconds and ... Kubernetes will recreate the topic you manually deleted ! And there was no procedural/imperative step required.
 
@@ -107,13 +131,13 @@ Check the events on the `pubsub` object to verify what happened :
 ![Kubernetes CRD reconcile events](./images/reconcile.png)
 
 ## Conclusion
-With Google [Config Connector](https://cloud.google.com/config-connector/docs/overview) we can move to a true declarative approach for infracture using Configuration as Data while harnassing the power of Kubernetes.
+With Google [Config Connector](https://cloud.google.com/config-connector/docs/overview) we can move to a true declarative approach for infrastructure using Configuration as Data while harnessing the power of Kubernetes.
 
 While Config Connector was released by Google for GCP, we see an adoption of the same principles by other Cloud providers. Microsoft Azure released [Azure Service Operator](https://github.com/Azure/azure-service-operator) and AWS is building around [AWS Controllers for Kubernetes (ACK)](https://github.com/aws-controllers-k8s/community). 
 
 And then there is [Crossplane](https://crossplane.io/) that aims to bring a universal control plane to enable platform teams to assemble infrastructure from multiple vendors.
 
-Is this a new industry trend ? Let's see what the furure brings.
+Is this the new industry trend ? Let's see what the future brings.
 
 
 ![binx.io logo](./images/binx-logo.png)
