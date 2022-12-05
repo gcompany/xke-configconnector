@@ -90,7 +90,7 @@ Let's say we want to create a `pubsub` topic.
 First we need to enable the `pubsub api` on our project. Based on the [ServiceUsage CRD](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service), we can create a YAML file that declares that the service is enabled :
 
 ```
-apiVersion:     
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1   
 kind: Service
 metadata:
   name: pubsub.googleapis.com
