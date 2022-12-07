@@ -1,20 +1,21 @@
 ---
 author: Koen Maes
 categories:
-- Google Cloud Platform
-- Technology
-status: draft
-date: 2022-12-01 14:00:00+01:00
+- gcp
+date: 2022-12-07 12:00:00+01:00
+excerpt: A plethora of Infrastructure as Code tools help manage such complex environments.
+  Config Connector takes a new approach by harnessing the power of Kubernetes to harden
+  the contract between configuration and infrastructure.
+guid: https://binx.io/wp-json/wp/v2/posts/9507
+image: images/banner.jpg
 og:
   image: images/og-banner.jpg
-slug: try-this-one
+slug: config-connector-a-new-approach-to-infrastructure-as-code
 status: publish
-title: Config Connector, a new approach to Infrastructure as Code
 subtitle: Do not plan. Reconcile.
-image: images/banner.jpg
-excerpt: >-
-  A plethora of Infrastructure as Code tools help manage such complex environments. Config Connector takes a new approach by harnessing the power of Kubernetes to harden the contract between configuration and infrastructure.
+title: Config Connector, a new approach to Infrastructure as Code
 ---
+
 Infrastructure as Code (IaC) helps "cloud native" companies manage their infrastructure based on the principles of software engineering. A wide range of IaC tools and frameworks facilitate in updating the cloud infrastructure. Config Connector is the latest member of this family and brings a new approach based on the power of Kubernetes. In this blog post we outline how it works compared to other tools.
 
 <!--more-->
